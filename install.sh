@@ -1,15 +1,24 @@
-#! /bin/bash
+#!/bin/bash
 
-sourceZsh='source ~/.my_sh/.zshrc'
-sourceBash='source ~/.my_sh/.bashrc'
+# make sure config files exist
+touch ~/.zshrc
+touch ~/.bashrc
 
-if ! grep -Fxq "$sourceZsh" ~/.zshrc
-then
-  echo 'source ~/.my_sh/.zshrc' >> ~/.zshrc
-fi
+# source versioned sh's
+sourceSh () {
+  sourceCommand="source ~/.my_sh/$1"
+  targetFile=~/$1
 
-if ! grep -Fxq "$sourceBash" ~/.bashrc
-then
-  echo 'source ~/.my_sh/.bashrc' >> ~/.bashrc
-fi
+  if ! grep -Fxq "$sourceCommand" $targetFile
+  then
+    echo "$sourceCommand" >> $targetFile
+  fi
+}
+
+sourceSh '.zshrc'
+sourceSh '.bashrc'
+
+
+
+
 
