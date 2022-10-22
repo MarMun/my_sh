@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# make sure config files exist
-touch ~/.zshrc
-touch ~/.bashrc
-
 # source versioned sh's
 sourceSh () {
   sourceCommand="source ~/.my_sh/$1"
   targetFile=~/$1
+
+  # make sure target file exist
+  touch $targetFile
 
   if ! grep -Fxq "$sourceCommand" $targetFile
   then
