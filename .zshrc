@@ -1,5 +1,8 @@
 export CLICOLOR=1  
 alias ll='ls -Ghal'
+alias tmuxc='nvim ~/.my_tmux'
+alias shc='nvim ~/.my_sh'
+alias nivmc='nvim ~/.my_nvim'
 
 PROMPT="%K{67}%F{234} %N %f%k%K{237} %~ %k "
 RPROMPT="%t"
