@@ -1,5 +1,11 @@
+# -------------------
+# my zshrc configs
+# -------------------
 export CLICOLOR=1  
+
+alias v='nvim'
 alias ll='ls -Ghal'
+
 alias tmuxc='nvim ~/.my_tmux'
 alias shc='nvim ~/.my_sh'
 alias nvimc='nvim ~/.my_nvim'
