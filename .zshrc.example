@@ -3,6 +3,7 @@
 # -------------------
 export CLICOLOR=1
 
+
 alias v='nvim'
 alias ll='ls -Ghal'
 
@@ -17,3 +18,8 @@ alias ollamaStop='systemctl stop ollama.service'
 
 PROMPT="%K{67}%F{234} %N %f%k%K{237} %~ %k "
 RPROMPT="%t"
+
+# -------------------
+# api keys used locally
+# -------------------
+export OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
