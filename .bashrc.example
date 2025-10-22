@@ -18,4 +18,7 @@ alias ollamaStop='systemctl stop ollama.service'
 # -------------------
 # api keys used locally
 # -------------------
-export OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
+export OPENAI_API_KEY=""
+
+export OPENROUTER_API_KEY=""
+export OPENROUTER_API_BASE="https://openrouter.ai/api/v1/chat/completions"
