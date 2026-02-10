@@ -16,6 +16,41 @@ alias nvimc='nvim ~/.my_nvim'
 alias ollamaStart='systemctl start ollama.service'
 alias ollamaStop='systemctl stop ollama.service'
 
+vps_tunnel() {
+  source ~/.kohashu/.env || return 1
+
+  ssh -v -N \
+    -L 18789:127.0.0.1:18789 \
+    -L 8888:127.0.0.1:8888 \
+    -L 2223:127.0.0.1:22 \
+    -R 2121:127.0.0.1:2121 \
+    -o ServerAliveInterval=60 \
+    -o ServerAliveCountMax=3 \
+    -o ExitOnForwardFailure=yes \
+    -o LogLevel=VERBOSE \
+    "${VPS_USER}@${VPS_HOST}"
+}
+
+vps_mount() {
+  source ~/.kohashu/.env || return 1
+  sshfs -p 2223 \
+    -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 \
+    -o follow_symlinks \
+    martin@127.0.0.1:/home/martin/.openclaw \
+    /mnt/kohashu_vps
+}
+
+vps_tunnel_close() {
+  # Kill any SSH process that forwards local port 8888
+  pkill -f "ssh.*-L 8888:127.0.0.1:8080" || echo "No tunnel found."
+}
+
+vps_ssh() {
+  source ~/.kohashu/.env || return 1
+  echo "SSH connect ${VPS_USER}@${VPS_HOST}"
+  ssh ${VPS_USER}@${VPS_HOST}
+}
+
 PROMPT="%K{67}%F{234} %N %f%k%K{237} %~ %k "
 RPROMPT="%t"
 
