@@ -15,6 +15,7 @@ git clone git@github.com:MarMun/my_sh.git .my_sh
 ```bash
 cp .bashrc.example .bashrc
 cp .zshrc.example .zshrc
+cp .tmux.conf.example .tmux.conf
 ```
 
 ### Embed in local configs

@@ -1,0 +1,11 @@
+# Enable OSC 52 clipboard passthrough
+# Required for nvim clipboard over SSH to work inside tmux
+set -g set-clipboard on
+
+# Optional: mouse support
+set -g mouse on
+
+# Optional: better prefix key (uncomment to use Ctrl+A instead of Ctrl+B)
+# unbind C-b
+# set -g prefix C-a
+# bind C-a send-prefix
