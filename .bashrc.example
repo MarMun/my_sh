@@ -55,7 +55,7 @@ vps_tunnel_close() {
 
 vps_ssh() {
   echo "SSH connect ${VPS_USER}@${VPS_HOST}"
-  ssh ${VPS_USER}@${VPS_HOST}
+  ssh -t ${VPS_USER}@${VPS_HOST} "$@"
 }
 
 # PS1="\[\e[0;38;5;235;48;5;117m\] \s \[\e[0;48;5;237m\] \w \[\e[0m\] "
