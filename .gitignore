@@ -1,3 +1,6 @@
+.tmux.conf
+!.tmux.conf.example
+
 .zshrc
 !.zshrc.example
 
