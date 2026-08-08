@@ -1,0 +1,16 @@
+#!/bin/bash
+# VPS SSH - SSH to VPS with optional command
+# Usage: vps_ssh [command [args...]]
+# Examples:
+#   vps_ssh                    # Interactive SSH session
+#   vps_ssh ls -la             # Run command and exit
+#   vps_ssh sudo systemctl status bitcoind
+
+# Check VPS config is set
+if [ -z "$VPS_USER" ] || [ -z "$VPS_HOST" ]; then
+    echo "Error: VPS_USER and VPS_HOST must be set in your shell config (.bashrc or .zshrc)"
+    exit 1
+fi
+
+echo "SSH connect ${VPS_USER}@${VPS_HOST}"
+exec ssh -t "${VPS_USER}@${VPS_HOST}" "$@"

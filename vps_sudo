@@ -1,0 +1,42 @@
+#!/bin/bash
+# VPS Sudo - Run commands with sudo on remote VPS via SSH
+# Usage: vps_sudo <command> [args...]
+# Examples:
+#   vps_sudo iftop -i eth0
+#   vps_sudo htop
+#   vps_sudo systemctl status bitcoind
+#   vps_sudo tail -f /var/log/syslog
+
+# Check VPS config is set
+if [ -z "$VPS_USER" ] || [ -z "$VPS_HOST" ]; then
+    echo "Error: VPS_USER and VPS_HOST must be set in your shell config (.bashrc or .zshrc)"
+    exit 1
+fi
+
+# ============================================
+# Main
+# ============================================
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $(basename "$0") <command> [args...]"
+    echo ""
+    echo "Run commands with sudo on remote VPS via SSH"
+    echo ""
+    echo "Examples:"
+    echo "  $(basename "$0") iftop -i eth0    # Monitor network traffic"
+    echo "  $(basename "$0") htop              # Interactive process viewer"
+    echo "  $(basename "$0") systemctl status  # Check service status"
+    echo "  $(basename "$0") tail -f /var/log/syslog"
+    echo ""
+    echo "Current VPS: ${VPS_USER}@${VPS_HOST}"
+    echo ""
+    echo "Tip: Set up SSH key auth to avoid password prompts."
+    exit 1
+fi
+
+# Build the remote command - pass all args to sudo
+REMOTE_CMD="sudo $*"
+
+# Execute via SSH with pseudo-terminal allocation (-t)
+# Required for interactive programs like iftop, htop, etc.
+exec ssh -t "${VPS_USER}@${VPS_HOST}" "${REMOTE_CMD}"

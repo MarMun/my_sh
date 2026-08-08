@@ -1,0 +1,45 @@
+#!/bin/bash
+# VPS Tunnel - Establish SSH port forwarding tunnel
+# Usage: vps_tunnel
+# Press Ctrl+C to stop the tunnel
+
+# Check VPS config is set
+if [ -z "$VPS_USER" ] || [ -z "$VPS_HOST" ]; then
+    echo "Error: VPS_USER and VPS_HOST must be set in your shell config (.bashrc or .zshrc)"
+    exit 1
+fi
+
+echo "Starting VPS tunnel to ${VPS_USER}@${VPS_HOST}"
+echo "Forwarded ports:"
+echo "  Local 18789 -> VPS 18789"
+echo "  Local 8888  -> VPS 8888"
+echo "  Local 12000 -> VPS 12000"
+echo "  Local 12001 -> VPS 12001"
+echo "  Local 2223  -> VPS 22 (for sshfs)"
+echo "  Local 2224  -> VPS 22 (for sshfs home)"
+echo "  Local 7000  -> VPS 7000"
+echo "  Local 7001  -> VPS 7001"
+echo "  Local 7002  -> VPS 7002"
+echo "  Local 9000  -> VPS 9000"
+echo "  Local 3002  -> VPS 3002 (BTC RPC Explorer)"
+echo "  Remote 2121 -> Local 2121 (reverse tunnel)"
+echo ""
+echo "Press Ctrl+C to stop"
+
+exec ssh -v -N \
+    -L 18789:127.0.0.1:18789 \
+    -L 8888:127.0.0.1:8888 \
+    -L 12000:127.0.0.1:12000 \
+    -L 12001:127.0.0.1:12001 \
+    -L 2223:127.0.0.1:22 \
+    -L 2224:127.0.0.1:22 \
+    -L 7000:127.0.0.1:7000 \
+    -L 7001:127.0.0.1:7001 \
+    -L 7002:127.0.0.1:7002 \
+    -L 9000:127.0.0.1:9000 \
+    -L 3002:127.0.0.1:3002 \
+    -R 2121:127.0.0.1:2121 \
+    -o ServerAliveInterval=60 \
+    -o ServerAliveCountMax=3 \
+    -o ExitOnForwardFailure=yes \
+    "${VPS_USER}@${VPS_HOST}"

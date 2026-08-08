@@ -1,0 +1,28 @@
+#!/bin/bash
+# VPS Mount - Mount VPS .openclaw directory via sshfs
+# Usage: vps_mount
+# Requires: sshfs, vps_tunnel running (for port 2223)
+
+# Check VPS config is set
+if [ -z "$VPS_USER" ] || [ -z "$VPS_HOST" ]; then
+    echo "Error: VPS_USER and VPS_HOST must be set in your shell config (.bashrc or .zshrc)"
+    exit 1
+fi
+
+MOUNT_POINT="/mnt/kohashu_vps"
+
+# Create mount point if it doesn't exist
+if [ ! -d "$MOUNT_POINT" ]; then
+    echo "Creating mount point: $MOUNT_POINT"
+    sudo mkdir -p "$MOUNT_POINT"
+    sudo chown "$(whoami):$(whoami)" "$MOUNT_POINT"
+fi
+
+echo "Mounting ${VPS_USER}@127.0.0.1:/home/${VPS_USER}/.openclaw to $MOUNT_POINT"
+echo "Note: Ensure vps_tunnel is running first (uses port 2223)"
+
+exec sshfs -p 2223 \
+    -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 \
+    -o follow_symlinks \
+    "${VPS_USER}@127.0.0.1:/home/${VPS_USER}/.openclaw" \
+    "$MOUNT_POINT"

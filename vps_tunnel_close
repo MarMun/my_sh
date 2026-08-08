@@ -1,0 +1,19 @@
+#!/bin/bash
+# VPS Tunnel Close - Kill VPS tunnel processes
+# Usage: vps_tunnel_close
+
+# Check VPS config is set
+if [ -z "$VPS_USER" ] || [ -z "$VPS_HOST" ]; then
+    echo "Error: VPS_USER and VPS_HOST must be set in your shell config (.bashrc or .zshrc)"
+    exit 1
+fi
+
+echo "Stopping VPS tunnels to ${VPS_USER}@${VPS_HOST}..."
+
+# Kill any SSH process that matches the tunnel pattern
+# Using the specific port 8888 as identifier (consistent with original)
+if pkill -f "ssh.*-L 8888:127.0.0.1:8888" 2>/dev/null; then
+    echo "Tunnel stopped."
+else
+    echo "No active tunnel found."
+fi
