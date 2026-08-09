@@ -22,6 +22,7 @@ echo "  Local 7001  -> VPS 7001"
 echo "  Local 7002  -> VPS 7002"
 echo "  Local 9000  -> VPS 9000"
 echo "  Local 3002  -> VPS 3002 (BTC RPC Explorer)"
+echo "  Local 25441 -> VPS 25441 (Specter Desktop)"
 echo "  Remote 2121 -> Local 2121 (reverse tunnel)"
 echo ""
 echo "Press Ctrl+C to stop"
@@ -38,6 +39,7 @@ exec ssh -v -N \
     -L 7002:127.0.0.1:7002 \
     -L 9000:127.0.0.1:9000 \
     -L 3002:127.0.0.1:3002 \
+    -L 25441:127.0.0.1:25441 \
     -R 2121:127.0.0.1:2121 \
     -o ServerAliveInterval=60 \
     -o ServerAliveCountMax=3 \
