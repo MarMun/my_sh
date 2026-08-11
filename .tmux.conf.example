@@ -2,18 +2,31 @@
 set -g mouse on
 
 # Enable OSC 52 clipboard passthrough
-# Required for nvim clipboard over SSH to work inside tmux
+# Useful for nvim clipboard over SSH
 set -g set-clipboard on
 
 # Faster escape key response (helps with nvim)
-set-option -sg escape-time 10
+set -sg escape-time 10
 
 # Enable focus events for nvim
-set-option -g focus-events on
+set -g focus-events on
 
 # Terminal settings
-set-option -g default-terminal "screen-256color"
-set-option -sa terminal-overrides ",xterm-256color:RGB"
+set -g default-terminal "screen-256color"
+set -sa terminal-overrides ",xterm-256color:RGB"
 
-# Copy mode: use xclip for clipboard integration
-bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'xclip -sel clip -i'
+# Copy mode clipboard integration
+# macOS: pbcopy
+# Linux: xclip if installed, otherwise xsel
+
+# macOS
+if-shell 'command -v pbcopy >/dev/null 2>&1' \
+    "bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'pbcopy'"
+
+# Linux (preferred)
+if-shell 'command -v xclip >/dev/null 2>&1' \
+    "bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'xclip -selection clipboard -in'"
+
+# Linux (fallback)
+if-shell 'command -v xsel >/dev/null 2>&1' \
+    "bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'xsel --clipboard --input'"
