@@ -11,7 +11,7 @@ fi
 
 echo "Starting VPS tunnel to ${VPS_USER}@${VPS_HOST}"
 echo "Forwarded ports:"
-echo "  Local 18789 -> VPS 18789"
+
 echo "  Local 8888  -> VPS 8888"
 echo "  Local 12000 -> VPS 12000"
 echo "  Local 12001 -> VPS 12001"
@@ -28,7 +28,7 @@ echo ""
 echo "Press Ctrl+C to stop"
 
 exec ssh -v -N \
-    -L 18789:127.0.0.1:18789 \
+
     -L 8888:127.0.0.1:8888 \
     -L 12000:127.0.0.1:12000 \
     -L 12001:127.0.0.1:12001 \
